@@ -1,0 +1,30 @@
+{
+  "name": "et-web-chat",
+  "version": "0.0.1",
+  "description": "et-web-chat\r ===========",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^0.9.0",
+    "et-log-parser": "0.0.1",
+    "irc": "^0.3.7",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "expect": "^1.0.2",
+    "expect.js": "^0.3.1",
+    "mocha": "^2.0.1"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haapanen/et-web-chat.git"
+  },
+  "author": "Jussi Haapanen <haapanen.jussi@gmail.com> (http://etjump.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/haapanen/et-web-chat/issues"
+  },
+  "homepage": "https://github.com/haapanen/et-web-chat"
+}
