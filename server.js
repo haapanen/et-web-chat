@@ -3,13 +3,11 @@
  */
 
 var logParser = require("et-log-parser");
-var net = require("net");
 var _ = require("lodash");
 var dgram = require("dgram");
 var fs = require("fs");
 var util = require("./util")
 var async = require("async");
-var irc = require("irc");
 
 var config = JSON.parse(fs.readFileSync("config.json"));
 var getStatusPacket = new Buffer("\xff\xff\xff\xffgetstatus", "binary");
@@ -82,11 +80,20 @@ function parseStatuses(servers) {
  * Creates log watchers for each server
  */
 function createLogWatchers(servers) {
+  var initPacketTemplate = _.template('\xff\xff\xff\xffrcon <%=rconPassword%> cp <%=message%>');
+
   _.each(servers, function (server) {
     server.parser = logParser.LogWatcher({
       file: server.logFile,
       parseChat: true
     });
+
+    var buffer = new Buffer(initPacketTemplate({
+      rconPassword: server.rconPassword,
+      message: "Starting cross-server chat... (Don't expect it to work yet, just testing) "
+    }), "binary");
+
+    server.client.send(buffer, 0, buffer.length, server.port, server.address);
 
     server.parser.on("message", function (message) {
       var buf = util.escapeString(message.name + "^7@" + server.name + "^7:^2 " + message.message);
